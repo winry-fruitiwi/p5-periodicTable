@@ -1,7 +1,10 @@
 /**
- *  @author 
- *  @date 2023.
+ *  @author Winry
+ *  @date 2024.6.26
  *
+ *  Periodic table app, designed while referencing:
+ *      Bowserinator's project, Periodic-Table-JSON
+ *      Fisher Scientific's periodic table, used for testing
  */
 
 let font
@@ -10,6 +13,7 @@ let variableWidthFont
 let instructions
 let debugCorner /* output debug text in the bottom left corner of the canvas */
 
+let testElement // Element instance, fictional and for testing
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -19,7 +23,7 @@ function preload() {
 
 
 function setup() {
-    let cnv = createCanvas(600, 300)
+    let cnv = createCanvas(1200, 700)
     cnv.parent('#canvas')
     colorMode(HSB, 360, 100, 100, 100)
     textFont(font, 14)
@@ -29,7 +33,17 @@ function setup() {
     instructions.html(`<pre>
         numpad 1 → freeze sketch</pre>`)
 
-    debugCorner = new CanvasDebugCorner(5)
+    // debugCorner = new CanvasDebugCorner(5)
+
+    testElement = new Element(
+        "H",
+        "Hydrogen",
+        1,
+        "noble gas",
+        1.008,
+        1,
+        1
+    )
 }
 
 
@@ -40,6 +54,8 @@ function draw() {
     debugCorner.setText(`frameCount: ${frameCount}`, 2)
     debugCorner.setText(`fps: ${frameRate().toFixed(0)}`, 1)
     debugCorner.showBottom()
+
+    testElement.render(10, 10)
 
     if (frameCount > 3000)
         noLoop()
