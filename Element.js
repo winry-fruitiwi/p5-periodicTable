@@ -38,26 +38,47 @@ class Element {
 
         // chemical symbol
         let symbolYPos = yPos + this.h/2 - SYMBOL_SHIFT_Y
+        let xMid = xPos + this.w/2
         strokeWeight(1)
         fill(0, 0, 80)
         textSize(30)
         textAlign(CENTER, CENTER)
         text(this.symbol,
-            xPos + this.w/2,
+            xMid,
             symbolYPos
         )
 
         // atomic number
-        textSize(14)
-        noStroke()
         // y coordinate should be halfway from textAscent to the top of this
         // element's display
+        textSize(14)
+        noStroke()
         let atomicNumberPos = (yPos + (symbolYPos-textAscent()))/2
         text(this.number,
-            xPos + this.w/2,
+            xMid,
             atomicNumberPos
         )
 
-        textSize()
+        // name
+        // positioned at the 1/3 mark from the bottom of the chemical
+        // symbol to the bottom of the element
+        textSize(10)
+        let cSBottom = symbolYPos + textAscent()/2 + textDescent()
+        let eBottom = yPos + this.h
+        let namePosY = (eBottom - cSBottom) * (1/3) + cSBottom
+        text(
+            this.name,
+            xMid,
+            namePosY
+        )
+
+        // atomic mass
+        // same as above, but at the 2/3 mark
+        let massPosY = (eBottom - cSBottom) * (2/3) + cSBottom
+        text(
+            this.atomicMass,
+            xMid,
+            massPosY
+        )
     }
 }

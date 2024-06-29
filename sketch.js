@@ -14,6 +14,7 @@ let instructions
 let debugCorner /* output debug text in the bottom left corner of the canvas */
 
 let testElement // Element instance, fictional and for testing
+let periodicTable // testing for now
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -44,6 +45,8 @@ function setup() {
         1,
         1
     )
+
+    periodicTable = new PeriodicTable(10, 10)
 }
 
 
@@ -51,11 +54,12 @@ function draw() {
     background(234, 34, 24)
 
     /* debugCorner needs to be last so its z-index is highest */
-    debugCorner.setText(`frameCount: ${frameCount}`, 2)
-    debugCorner.setText(`fps: ${frameRate().toFixed(0)}`, 1)
-    debugCorner.showBottom()
+    // debugCorner.setText(`frameCount: ${frameCount}`, 2)
+    // debugCorner.setText(`fps: ${frameRate().toFixed(0)}`, 1)
+    // debugCorner.showBottom()
 
-    testElement.render(10, 10)
+    // testElement.render(10, 10)
+    periodicTable.render()
 
     if (frameCount > 3000)
         noLoop()
