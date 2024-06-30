@@ -15,11 +15,14 @@ let debugCorner /* output debug text in the bottom left corner of the canvas */
 
 let testElement // Element instance, fictional and for testing
 let periodicTable // testing for now
+let tableJSON // JSON for the periodic table
 
 function preload() {
     font = loadFont('data/consola.ttf')
     fixedWidthFont = loadFont('data/consola.ttf')
     variableWidthFont = loadFont('data/meiryo.ttf')
+
+    tableJSON = loadJSON('elements.json', gotData)
 }
 
 
@@ -46,7 +49,6 @@ function setup() {
         1
     )
 
-    periodicTable = new PeriodicTable(10, 10)
 }
 
 
@@ -59,10 +61,16 @@ function draw() {
     // debugCorner.showBottom()
 
     // testElement.render(10, 10)
-    periodicTable.render()
+    if (periodicTable)
+        periodicTable.render()
 
     if (frameCount > 3000)
         noLoop()
+}
+
+
+function gotData(data) {
+    periodicTable = new PeriodicTable(10, 10, data)
 }
 
 

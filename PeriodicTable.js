@@ -14,7 +14,10 @@ class PeriodicTable {
         this.filters = []
 
         // construct a number of test elements
-        this.constructTestElements()
+        // this.constructTestElements()
+        this.constructElements(json)
+
+        print(json)
     }
 
     constructTestElements() {
@@ -32,6 +35,41 @@ class PeriodicTable {
                     )
                 )
             }
+        }
+    }
+
+    constructElements(json) {
+        let elements = json["elements"]
+
+        for (let i = 0; i < elements.length; i++) {
+            let element = elements[i]
+
+            // since atomic mass is rarely rounded already (due to isotope
+            // abundance being very random, except man-made elements and
+            // simpler elements), we have to do it ourselves
+            let atomicMass = element["atomic_mass"]
+            // most elements seem to have at least 2 place values, sometimes
+            // three in the case of hydrogen, so we want to round that down
+            atomicMass *= 1000
+            atomicMass = round(atomicMass)
+            // convert it into a string so that we can reintroduce the decimal
+            atomicMass = str(atomicMass)
+            let len = atomicMass.length
+            atomicMass = atomicMass.slice(0, len-3) + "." + atomicMass.slice(len-3)
+
+            this.elements.push(
+                new Element(
+                    element["symbol"],
+                    element["name"],
+                    element["number"],
+                    "noble gas",
+                    atomicMass,
+                    element["group"],
+                    element["period"],
+                    60,
+                    80
+                )
+            )
         }
     }
 
