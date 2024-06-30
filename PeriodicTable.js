@@ -40,8 +40,12 @@ class PeriodicTable {
 
     constructElements(json) {
         let elements = json["elements"]
+        // keeps track of where to display lanthanides and actinides
+        let lGroup = 3
+        let aGroup = 3
 
         for (let i = 0; i < elements.length; i++) {
+
             let element = elements[i]
 
             // since atomic mass is rarely rounded already (due to isotope
@@ -55,21 +59,74 @@ class PeriodicTable {
             // convert it into a string so that we can reintroduce the decimal
             atomicMass = str(atomicMass)
             let len = atomicMass.length
-            atomicMass = atomicMass.slice(0, len-3) + "." + atomicMass.slice(len-3)
 
-            this.elements.push(
-                new Element(
-                    element["symbol"],
-                    element["name"],
-                    element["number"],
-                    "noble gas",
-                    atomicMass,
-                    element["group"],
-                    element["period"],
-                    60,
-                    80
+            if (atomicMass.slice(len-3) === "000") {
+                atomicMass = atomicMass.slice(0, len-3)
+                atomicMass = "(" + atomicMass + ")"
+            }
+            else {
+                atomicMass = atomicMass.slice(0, len-3) + "." + atomicMass.slice(len-3)
+            }
+
+            // abbreviations to shorten code
+            let g = element["group"]
+            let p = element["period"]
+
+            // handles lanthanides by putting them in their own row,
+            // although this does leave a gap in the periodic table where
+            // they are supposed to be (will be fixed soon)
+            if (p === 6 && g === 3) {
+                this.elements.push(
+                    new Element(
+                        element["symbol"],
+                        element["name"],
+                        element["number"],
+                        "noble gas",
+                        atomicMass,
+                        lGroup,
+                        10,
+                        60,
+                        80
+                    )
                 )
-            )
+
+                lGroup += 1
+            }
+
+            // same for here, but with the actinides
+            else if (p === 7 && g === 3) {
+                this.elements.push(
+                    new Element(
+                        element["symbol"],
+                        element["name"],
+                        element["number"],
+                        "noble gas",
+                        atomicMass,
+                        aGroup,
+                        11,
+                        60,
+                        80
+                    )
+                )
+
+                aGroup += 1
+            }
+
+            else {
+                this.elements.push(
+                    new Element(
+                        element["symbol"],
+                        element["name"],
+                        element["number"],
+                        "noble gas",
+                        atomicMass,
+                        element["group"],
+                        element["period"],
+                        60,
+                        80
+                    )
+                )
+            }
         }
     }
 

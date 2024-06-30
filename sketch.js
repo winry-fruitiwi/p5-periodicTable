@@ -27,7 +27,7 @@ function preload() {
 
 
 function setup() {
-    let cnv = createCanvas(1200, 700)
+    let cnv = createCanvas(1200, 1000)
     cnv.parent('#canvas')
     colorMode(HSB, 360, 100, 100, 100)
     textFont(font, 14)
