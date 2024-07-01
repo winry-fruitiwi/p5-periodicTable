@@ -15,7 +15,7 @@ class PeriodicTable {
 
         // construct a number of test elements
         // this.constructTestElements()
-        this.constructElements(json)
+        this.constructElements(json, 75, 75)
 
         print(json)
     }
@@ -38,7 +38,7 @@ class PeriodicTable {
         }
     }
 
-    constructElements(json) {
+    constructElements(json, w, h) {
         let elements = json["elements"]
         // keeps track of where to display lanthanides and actinides
         let lGroup = 3
@@ -76,6 +76,24 @@ class PeriodicTable {
             // although this does leave a gap in the periodic table where
             // they are supposed to be (will be fixed soon)
             if (p === 6 && g === 3) {
+                // creates a placeholder element to patch up the hole in the
+                // periodic table and make it look cleaner
+                if (lGroup === 3) {
+                    this.elements.push(
+                        new Element(
+                            "",
+                            "lanthanides",
+                            "",
+                            "",
+                            "",
+                            g,
+                            p,
+                            w,
+                            h
+                        )
+                    )
+                }
+
                 this.elements.push(
                     new Element(
                         element["symbol"],
@@ -85,8 +103,8 @@ class PeriodicTable {
                         atomicMass,
                         lGroup,
                         10,
-                        60,
-                        80
+                        w,
+                        h
                     )
                 )
 
@@ -95,6 +113,22 @@ class PeriodicTable {
 
             // same for here, but with the actinides
             else if (p === 7 && g === 3) {
+                if (aGroup === 3) {
+                    this.elements.push(
+                        new Element(
+                            "",
+                            "actinides",
+                            "",
+                            "",
+                            "",
+                            g,
+                            p,
+                            w,
+                            h
+                        )
+                    )
+                }
+
                 this.elements.push(
                     new Element(
                         element["symbol"],
@@ -104,8 +138,8 @@ class PeriodicTable {
                         atomicMass,
                         aGroup,
                         11,
-                        60,
-                        80
+                        w,
+                        h
                     )
                 )
 
@@ -122,8 +156,8 @@ class PeriodicTable {
                         atomicMass,
                         element["group"],
                         element["period"],
-                        60,
-                        80
+                        w,
+                        h
                     )
                 )
             }

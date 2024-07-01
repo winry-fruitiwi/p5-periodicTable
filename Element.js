@@ -13,6 +13,7 @@ class Element {
         this.g = group
         this.w = w
         this.h = h
+        this.padding = 5 // pads contents
     }
 
     // renders the element. includes a hover and click check for enlarging the
@@ -61,8 +62,16 @@ class Element {
 
         // name
         // positioned at the 1/3 mark from the bottom of the chemical
-        // symbol to the bottom of the element
-        textSize(10)
+        // symbol to the bottom of the element. uses a while loop to
+        // determine the largest possible text size that still fits in the box
+        let currentSize = 12
+        textSize(currentSize)
+        while (textWidth(this.name) >= this.w - this.padding*2) {
+            currentSize -= .1
+            textSize(currentSize)
+        }
+        print(this.name + " → " + currentSize)
+
         let cSBottom = symbolYPos + textAscent()/2 + textDescent()
         let eBottom = yPos + this.h
         let namePosY = (eBottom - cSBottom) * (1/3) + cSBottom
@@ -72,6 +81,7 @@ class Element {
             namePosY
         )
 
+        textSize(10)
         // atomic mass
         // same as above, but at the 2/3 mark
         let massPosY = (eBottom - cSBottom) * (2/3) + cSBottom
