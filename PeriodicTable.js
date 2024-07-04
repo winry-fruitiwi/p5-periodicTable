@@ -165,10 +165,30 @@ class PeriodicTable {
     }
 
     // renders all elements at their respective locations, starting from the
-    // x and y coordinates of this class. also filters
+    // x and y coordinates of this class. also displays the search bar,
+    // which is updated in keyPressed() but is displayed and used here.
     render() {
+        textSize(14)
+
+        const SEARCH_PADDING = 3
+        const SEARCH_MARGIN = 10
+        let textBoxHeight = textHeight() + SEARCH_PADDING * 2
+
+        fill(0, 0, 25)
+        rect(this.x, this.y, textWidth(" ")*32, textBoxHeight)
+
+        fill(0, 0, 80)
+        textAlign(LEFT, TOP)
+        text(query, this.x + SEARCH_PADDING, this.y + SEARCH_PADDING)
+
         for (let element of this.elements) {
-            element.render(this.x, this.y)
+            // helps simplify this code
+            let lQ = query.toLowerCase()
+            let symbol = element.symbol.toLowerCase()
+            let name = element.name.toLowerCase()
+            if (symbol.includes(lQ) || name.includes(lQ)) {
+                element.render(this.x, this.y + 2*SEARCH_MARGIN + textBoxHeight)
+            }
         }
     }
 }

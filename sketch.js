@@ -2,7 +2,7 @@
  *  @author Winry
  *  @date 2024.6.26
  *
- *  Periodic table app, designed while referencing:
+ *  Periodic table app, designed while referencing and/or using:
  *      Bowserinator's project, Periodic-Table-JSON
  *      Fisher Scientific's periodic table, used for testing
  */
@@ -16,6 +16,8 @@ let debugCorner /* output debug text in the bottom left corner of the canvas */
 let testElement // Element instance, fictional and for testing
 let periodicTable // testing for now
 let tableJSON // JSON for the periodic table
+
+let query = "" // used in periodicTable for the search bar
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -35,7 +37,10 @@ function setup() {
     /* initialize instruction div */
     instructions = select('#ins')
     instructions.html(`<pre>
-        numpad 1 → freeze sketch</pre>`)
+        numpad 1 → freeze sketch
+        created with bowserinator's Periodic Table JSON project in Github
+        referenced Fisher Scientific periodic table during development
+        can search for atomic number, name, and symbol</pre>`)
 
     // debugCorner = new CanvasDebugCorner(5)
 
@@ -73,6 +78,11 @@ function gotData(data) {
     periodicTable = new PeriodicTable(10, 10, data)
 }
 
+// helper function, used for simplification
+function textHeight() {
+    return textAscent() + textDescent()
+}
+
 
 function keyPressed() {
     /* stop sketch */
@@ -85,6 +95,12 @@ function keyPressed() {
     if (key === '`') { /* toggle debug corner visibility */
         debugCorner.visible = !debugCorner.visible
         console.log(`debugCorner visibility set to ${debugCorner.visible}`)
+    }
+
+    if (key.length === 1) {
+        query += key
+    } else if (keyCode === BACKSPACE) {
+        query = query.slice(0, query.length - 1)
     }
 }
 
