@@ -5,6 +5,10 @@
  *  Periodic table app, designed while referencing and/or using:
  *      Bowserinator's project, Periodic-Table-JSON
  *      Fisher Scientific's periodic table, used for testing
+ *      Dark Reader, used to darken screens so that my eyes don't burn at night
+ *
+ *  This project is probably not going to find its way out of my editor, but
+ *  I will still put products that I use here on the list of references.
  */
 
 let font

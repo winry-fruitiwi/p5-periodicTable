@@ -21,14 +21,18 @@ class Element {
     // element appears as a rectangle with number, atomic mass, symbol, and
     // maybe name. changes color based on category. the element has to be
     // displayed translated by x and y if the periodic table needs to be moved.
-    render(x, y) {
+    render(x, y, filtered) {
         const SYMBOL_SHIFT_Y = 10
         let xPos = x + (this.p - 1) * this.w
         let yPos = y + (this.g - 1) * this.h
 
+        // controls alpha value of all items. filtered is true, or 1, if the
+        // element is included
+        let alpha = filtered*80 + 20
+
         // element shell
         rectMode(CORNER)
-        stroke(0, 0, 80)
+        stroke(0, 0, 80, alpha)
         strokeWeight(2)
         noFill()
         rect(xPos,
@@ -41,7 +45,7 @@ class Element {
         let symbolYPos = yPos + this.h/2 - SYMBOL_SHIFT_Y
         let xMid = xPos + this.w/2
         strokeWeight(1)
-        fill(0, 0, 80)
+        fill(0, 0, 80, alpha)
         textSize(30)
         textAlign(CENTER, CENTER)
         text(this.symbol,

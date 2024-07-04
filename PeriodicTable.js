@@ -187,7 +187,15 @@ class PeriodicTable {
             let symbol = element.symbol.toLowerCase()
             let name = element.name.toLowerCase()
             if (symbol.includes(lQ) || name.includes(lQ)) {
-                element.render(this.x, this.y + 2*SEARCH_MARGIN + textBoxHeight)
+                element.render(this.x,
+                    this.y + 2*SEARCH_MARGIN + textBoxHeight,
+                    true
+                )
+            } else {
+                element.render(this.x,
+                    this.y + 2*SEARCH_MARGIN + textBoxHeight,
+                    false
+                )
             }
         }
     }
