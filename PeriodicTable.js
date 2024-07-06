@@ -169,6 +169,7 @@ class PeriodicTable {
     // which is updated in keyPressed() but is displayed and used here.
     render() {
         textSize(14)
+        rectMode(CORNER)
 
         const SEARCH_PADDING = 3
         const SEARCH_MARGIN = 10
@@ -181,22 +182,48 @@ class PeriodicTable {
         textAlign(LEFT, TOP)
         text(query, this.x + SEARCH_PADDING, this.y + SEARCH_PADDING)
 
-        for (let element of this.elements) {
+        // if an element is hovered over, make sure it is displayed last so
+        // that it's on top of everything else
+        let hoveredElement
+
+        for (let e of this.elements) {
             // helps simplify this code
             let lQ = query.toLowerCase()
-            let symbol = element.symbol.toLowerCase()
-            let name = element.name.toLowerCase()
+            let symbol = e.symbol.toLowerCase()
+            let name = e.name.toLowerCase()
             if (symbol.includes(lQ) || name.includes(lQ)) {
-                element.render(this.x,
-                    this.y + 2*SEARCH_MARGIN + textBoxHeight,
+                // simplification: the top of the periodic table
+                let tableTop = this.y + 2*SEARCH_MARGIN + textBoxHeight
+
+                // since the element calculates its positions in its own
+                // render function, we have to do it here instead
+                // I'm not sure
+                if (
+                    mouseY < this.x + ((e.g - 1) * e.h) + e.h - e.h/2 + e.h &&
+                    mouseX < tableTop + ((e.p - 1) * e.w) + e.w - e.w/2 &&
+                    mouseY > this.x + ((e.g - 1) * e.h) - e.h/2 + e.h &&
+                    mouseX > tableTop + ((e.p - 1) * e.w) - e.w/2
+                ) {
+                    print("hi")
+                    hoveredElement = e
+                }
+                e.render(this.x,
+                    tableTop,
                     true
                 )
             } else {
-                element.render(this.x,
+                e.render(this.x,
                     this.y + 2*SEARCH_MARGIN + textBoxHeight,
                     false
                 )
             }
+        }
+
+        if (hoveredElement) {
+            hoveredElement.hoverRender(
+                this.x,
+                this.y + 2*SEARCH_MARGIN + textBoxHeight
+            )
         }
     }
 }

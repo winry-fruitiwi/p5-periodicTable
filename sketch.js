@@ -22,6 +22,7 @@ let periodicTable // testing for now
 let tableJSON // JSON for the periodic table
 
 let query = "" // used in periodicTable for the search bar
+let backgroundColor
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -58,6 +59,7 @@ function setup() {
         1
     )
 
+    backgroundColor = color(234, 34, 24)
 }
 
 
