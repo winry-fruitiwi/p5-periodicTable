@@ -59,7 +59,7 @@ function setup() {
         1
     )
 
-    backgroundColor = color(234, 34, 24)
+    backgroundColor = [234, 34, 24]
 }
 
 

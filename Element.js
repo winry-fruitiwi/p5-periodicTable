@@ -14,6 +14,22 @@ class Element {
         this.w = w
         this.h = h
         this.padding = 5 // pads contents
+
+        // determine fill via category
+        this.colorsDict = {
+            "noble gas": [274, 58, 42],
+            "alkaline earth metal": [0, 84, 139],
+            "alkali metal": [10, 188, 222],
+            "transition metal": [0, 0, 0],
+            "post-transition metal": [0, 0, 0],
+            "metalloid": [0, 0, 0],
+            "halogen": [0, 0, 0],
+            "nonmetal": [0, 0, 0],
+            "lanthanide": [0, 0, 0],
+            "actinide": [0, 0, 0],
+            "unknown": [0, 0, 0],
+            "": [0, 0, 0]
+        }
     }
 
     // renders the element. includes a hover and click check for enlarging the
@@ -30,11 +46,14 @@ class Element {
         // element is included
         let alpha = filtered*80 + 20
 
+        // the color list I used for the current dictionary of colors
+        let cColor = this.colorsDict[this.category]
+
         // element shell
         rectMode(CORNER)
-        stroke(0, 0, 80, alpha)
+        stroke(backgroundColor[0], backgroundColor[1], backgroundColor[2], alpha)
         strokeWeight(2)
-        noFill()
+        fill(cColor[0], cColor[1], cColor[2], alpha)
         rect(xPos,
             yPos,
             this.w,
@@ -44,7 +63,8 @@ class Element {
         // chemical symbol
         let symbolYPos = yPos + this.h/2 - SYMBOL_SHIFT_Y
         let xMid = xPos + this.w/2
-        strokeWeight(1)
+        strokeWeight(1 * filtered)
+        stroke(0, 0, 80, alpha)
         fill(0, 0, 80, alpha)
         textSize(30)
         textAlign(CENTER, CENTER)
@@ -101,11 +121,14 @@ class Element {
         let xPos = x + (this.p - 1) * this.w
         let yPos = y + (this.g - 1) * this.h
 
+        // the color list I used for the current dictionary of colors
+        let cColor = this.colorsDict[this.category]
+
         // element shell
         rectMode(CORNER)
         stroke(0, 0, 80)
         strokeWeight(4)
-        fill(backgroundColor)
+        fill(cColor)
         rect(xPos,
             yPos,
             this.w*1.5,
