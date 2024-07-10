@@ -72,6 +72,49 @@ class PeriodicTable {
             let g = element["group"]
             let p = element["period"]
 
+            // determine the element category via switch-case statements
+            let eCategory = element["category"] // category of element in JSON
+            let category // category of element for use in object initiation
+
+            switch (true) {
+                case eCategory.includes("unknown, predicted"):
+                    category = "unknown"
+                    break;
+                case eCategory.includes("unknown, but predicted"):
+                    category = "unknown"
+                    break;
+                case eCategory.includes("noble gas"):
+                    category = "noble gas"
+                    break;
+                case eCategory.includes("alkali metal"):
+                    category = "alkali metal"
+                    break;
+                case eCategory.includes("alkaline earth metal"):
+                    category = "alkaline earth metal"
+                    break;
+                case eCategory.includes("transition metal"):
+                    category = "transition metal"
+                    break;
+                case eCategory.includes("post-transition metal"):
+                    category = "post-transition metal"
+                    break;
+                case eCategory.includes("metalloid"):
+                    category = "metalloid"
+                    break;
+                case eCategory.includes("halogen"):
+                    category = "halogen"
+                    break;
+                case eCategory.includes("nonmetal"):
+                    category = "nonmetal"
+                    break;
+                case eCategory.includes("lanthanide"):
+                    category = "lanthanide"
+                    break;
+                case eCategory.includes("actinide"):
+                    category = "actinide"
+                    break;
+            }
+
             // handles lanthanides by putting them in their own row,
             // although this does leave a gap in the periodic table where
             // they are supposed to be (will be fixed soon)
@@ -99,7 +142,7 @@ class PeriodicTable {
                         element["symbol"],
                         element["name"],
                         element["number"],
-                        "noble gas",
+                        category,
                         atomicMass,
                         lGroup,
                         10,
@@ -134,7 +177,7 @@ class PeriodicTable {
                         element["symbol"],
                         element["name"],
                         element["number"],
-                        "noble gas",
+                        category,
                         atomicMass,
                         aGroup,
                         11,
@@ -152,7 +195,7 @@ class PeriodicTable {
                         element["symbol"],
                         element["name"],
                         element["number"],
-                        "noble gas",
+                        category,
                         atomicMass,
                         element["group"],
                         element["period"],

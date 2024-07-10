@@ -28,7 +28,7 @@ class Element {
             "lanthanide": [0, 0, 0],
             "actinide": [0, 0, 0],
             "unknown": [0, 0, 0],
-            "": [0, 0, 0]
+            "": [60, 60, 60]
         }
     }
 
