@@ -17,18 +17,18 @@ class Element {
 
         // determine fill via category
         this.colorsDict = {
-            "noble gas": [274, 58, 42],
-            "alkaline earth metal": [0, 84, 139],
-            "alkali metal": [10, 188, 222],
-            "transition metal": [0, 0, 0],
-            "post-transition metal": [0, 0, 0],
-            "metalloid": [0, 0, 0],
-            "halogen": [0, 0, 0],
-            "nonmetal": [0, 0, 0],
-            "lanthanide": [0, 0, 0],
-            "actinide": [0, 0, 0],
-            "unknown": [0, 0, 0],
-            "": [60, 60, 60]
+            "noble gas": [256, 73, 88],
+            "alkaline earth metal": [203, 100, 54],
+            "alkali metal": [189, 95, 87],
+            "transition metal": [209, 3, 23],
+            "post-transition metal": [30, 100, 92],
+            "metalloid": [353, 82, 67],
+            "halogen": [240, 39, 75],
+            "nonmetal": [274, 58, 42],
+            "lanthanide": [207, 100, 66],
+            "actinide": [106, 99, 84],
+            "unknown": [0, 0, 20],
+            "": [0, 0, 0]
         }
     }
 
@@ -64,8 +64,8 @@ class Element {
         let symbolYPos = yPos + this.h/2 - SYMBOL_SHIFT_Y
         let xMid = xPos + this.w/2
         strokeWeight(1 * filtered)
-        stroke(0, 0, 80, alpha)
-        fill(0, 0, 80, alpha)
+        stroke(0, 0, 100, alpha)
+        fill(0, 0, 100, alpha)
         textSize(30)
         textAlign(CENTER, CENTER)
         text(this.symbol,
@@ -126,7 +126,7 @@ class Element {
 
         // element shell
         rectMode(CORNER)
-        stroke(0, 0, 80)
+        stroke(0, 0, 100)
         strokeWeight(4)
         fill(cColor)
         rect(xPos,
@@ -139,7 +139,7 @@ class Element {
         let symbolYPos = yPos + this.h/2 * 1.5 - SYMBOL_SHIFT_Y
         let xMid = xPos + this.w/2 * 1.5
         strokeWeight(1)
-        fill(0, 0, 80)
+        fill(0, 0, 100)
         textSize(45)
         textAlign(CENTER, CENTER)
         text(this.symbol,

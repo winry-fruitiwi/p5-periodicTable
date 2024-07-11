@@ -92,11 +92,11 @@ class PeriodicTable {
                 case eCategory.includes("alkaline earth metal"):
                     category = "alkaline earth metal"
                     break;
-                case eCategory.includes("transition metal"):
-                    category = "transition metal"
-                    break;
                 case eCategory.includes("post-transition metal"):
                     category = "post-transition metal"
+                    break;
+                case eCategory.includes("transition metal"):
+                    category = "transition metal"
                     break;
                 case eCategory.includes("metalloid"):
                     category = "metalloid"
@@ -127,7 +127,7 @@ class PeriodicTable {
                             "",
                             "lanthanides",
                             "",
-                            "",
+                            "lanthanide",
                             "",
                             g,
                             p,
@@ -162,7 +162,7 @@ class PeriodicTable {
                             "",
                             "actinides",
                             "",
-                            "",
+                            "actinide",
                             "",
                             g,
                             p,
