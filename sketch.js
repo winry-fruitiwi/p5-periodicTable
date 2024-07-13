@@ -23,6 +23,7 @@ let tableJSON // JSON for the periodic table
 
 let query = "" // used in periodicTable for the search bar
 let backgroundColor
+let colorsDict
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -60,6 +61,21 @@ function setup() {
     )
 
     backgroundColor = [234, 34, 24]
+
+    colorsDict = {
+        "nonmetal": [274, 58, 42],
+        "alkali metal": [189, 95, 87],
+        "alkaline earth metal": [203, 100, 54],
+        "transition metal": [209, 3, 23],
+        "post-transition metal": [30, 100, 92],
+        "metalloid": [353, 82, 67],
+        "halogen": [240, 39, 75],
+        "lanthanide": [207, 100, 66],
+        "actinide": [106, 99, 84],
+        "noble gas": [256, 73, 88],
+        // "unknown": [0, 0, 20],
+        // "": [0, 0, 0]
+    }
 }
 
 

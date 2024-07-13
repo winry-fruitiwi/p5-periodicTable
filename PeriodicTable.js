@@ -20,6 +20,42 @@ class PeriodicTable {
         print(json)
     }
 
+    // create a legend with the colors of different element categories
+    renderCategoryLegend() {
+        const X_START = width/4
+        const Y_START = 10
+        const W = 30 // width
+        const H = 15 // height
+        const MARGIN = 10 // margin between each color sample
+
+        // helpers
+        let categories = Object.keys(colorsDict)
+        let colors = Object.values(colorsDict)
+
+        textSize(14)
+        textAlign(LEFT, CENTER)
+
+        for (let i = 0; i < categories.length; i++) {
+            let color = colors[i]
+            let category = categories[i]
+
+            // simplifies code
+            let yPos = Y_START + i*(H + MARGIN)
+
+            // color sample
+            noStroke()
+            fill(color[0], color[1], color[2])
+            rect(
+                X_START, yPos,
+                W, H
+            )
+
+            // color label
+            fill(0, 0, 100)
+            text(category, X_START + W + MARGIN, yPos + H/2)
+        }
+    }
+
     constructTestElements() {
         for (let i = 1; i < 6; i++) {
             for (let j = 1; j < 4; j++) {
@@ -77,12 +113,12 @@ class PeriodicTable {
             let category // category of element for use in object initiation
 
             switch (true) {
-                case eCategory.includes("unknown, predicted"):
-                    category = "unknown"
-                    break;
-                case eCategory.includes("unknown, but predicted"):
-                    category = "unknown"
-                    break;
+                // case eCategory.includes("unknown, predicted"):
+                //     category = "unknown"
+                //     break;
+                // case eCategory.includes("unknown, but predicted"):
+                //     category = "unknown"
+                //     break;
                 case eCategory.includes("noble gas"):
                     category = "noble gas"
                     break;
@@ -211,6 +247,8 @@ class PeriodicTable {
     // x and y coordinates of this class. also displays the search bar,
     // which is updated in keyPressed() but is displayed and used here.
     render() {
+        this.renderCategoryLegend()
+
         textSize(14)
         rectMode(CORNER)
 

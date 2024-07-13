@@ -14,22 +14,6 @@ class Element {
         this.w = w
         this.h = h
         this.padding = 5 // pads contents
-
-        // determine fill via category
-        this.colorsDict = {
-            "noble gas": [256, 73, 88],
-            "alkaline earth metal": [203, 100, 54],
-            "alkali metal": [189, 95, 87],
-            "transition metal": [209, 3, 23],
-            "post-transition metal": [30, 100, 92],
-            "metalloid": [353, 82, 67],
-            "halogen": [240, 39, 75],
-            "nonmetal": [274, 58, 42],
-            "lanthanide": [207, 100, 66],
-            "actinide": [106, 99, 84],
-            "unknown": [0, 0, 20],
-            "": [0, 0, 0]
-        }
     }
 
     // renders the element. includes a hover and click check for enlarging the
@@ -47,7 +31,7 @@ class Element {
         let alpha = filtered*80 + 20
 
         // the color list I used for the current dictionary of colors
-        let cColor = this.colorsDict[this.category]
+        let cColor = colorsDict[this.category]
 
         // element shell
         rectMode(CORNER)
@@ -122,7 +106,7 @@ class Element {
         let yPos = y + (this.g - 1) * this.h
 
         // the color list I used for the current dictionary of colors
-        let cColor = this.colorsDict[this.category]
+        let cColor = colorsDict[this.category]
 
         // element shell
         rectMode(CORNER)
