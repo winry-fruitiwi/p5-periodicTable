@@ -285,7 +285,6 @@ class PeriodicTable {
                     mouseY > this.x + ((e.g - 1) * e.h) - e.h/2 + e.h &&
                     mouseX > tableTop + ((e.p - 1) * e.w) - e.w/2
                 ) {
-                    print("hi")
                     hoveredElement = e
                 }
                 e.render(this.x,

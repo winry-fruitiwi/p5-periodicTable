@@ -171,5 +171,9 @@ class Element {
             xMid,
             massPosY
         )
+
+        if (mouseJustReleased) {
+            ifDarkenScreen = true
+        }
     }
 }

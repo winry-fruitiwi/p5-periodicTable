@@ -25,6 +25,9 @@ let query = "" // used in periodicTable for the search bar
 let backgroundColor
 let colorsDict
 
+let mouseJustReleased
+let ifDarkenScreen
+
 function preload() {
     font = loadFont('data/consola.ttf')
     fixedWidthFont = loadFont('data/consola.ttf')
@@ -87,14 +90,29 @@ function draw() {
     // debugCorner.setText(`fps: ${frameRate().toFixed(0)}`, 1)
     // debugCorner.showBottom()
 
+    if (mouseJustReleased) {
+        ifDarkenScreen = false
+    }
+
     // testElement.render(10, 10)
     if (periodicTable)
         periodicTable.render()
+
+    if (ifDarkenScreen) {
+        darkenScreen()
+    }
+
+    mouseJustReleased = false
 
     if (frameCount > 3000)
         noLoop()
 }
 
+function darkenScreen() {
+    noStroke()
+    fill(0, 0, 0, 30)
+    rect(-10, -10, width + 10, height + 10)
+}
 
 function gotData(data) {
     periodicTable = new PeriodicTable(10, 10, data)
@@ -124,6 +142,10 @@ function keyPressed() {
     } else if (keyCode === BACKSPACE) {
         query = query.slice(0, query.length - 1)
     }
+}
+
+function mouseReleased() {
+    mouseJustReleased = true
 }
 
 
