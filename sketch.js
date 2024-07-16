@@ -27,6 +27,7 @@ let colorsDict
 
 let mouseJustReleased
 let ifDarkenScreen
+let selectedElement
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -79,6 +80,8 @@ function setup() {
         // "unknown": [0, 0, 20],
         // "": [0, 0, 0]
     }
+
+    noCursor()
 }
 
 
@@ -100,18 +103,49 @@ function draw() {
 
     if (ifDarkenScreen) {
         darkenScreen()
+        displayDetailed(selectedElement)
     }
+
+    displayMouseCursor()
 
     mouseJustReleased = false
 
-    if (frameCount > 3000)
-        noLoop()
+    // if (frameCount > 3000)
+    //     noLoop()
 }
 
 function darkenScreen() {
     noStroke()
     fill(0, 0, 0, 30)
     rect(-10, -10, width + 10, height + 10)
+}
+
+function displayDetailed(element) {
+    // margin between the left and right sides of the detailed view and the
+    // window. stands for "horizontal margin"
+    const H_MARGIN = 50
+    // "vertical margin" for the top and bottom sides of the detailed view
+    // and the window
+    const V_MARGIN = 50
+
+    // background
+    fill(0, 0, 10)
+    noStroke()
+    rect(
+        H_MARGIN, V_MARGIN
+    )
+}
+
+function displayMouseCursor() {
+    strokeWeight(10)
+    stroke(0, 0, 100)
+
+    if (mouseIsPressed) {
+        stroke(30, 80, 80)
+        strokeWeight(8)
+    }
+
+    point(mouseX, mouseY)
 }
 
 function gotData(data) {

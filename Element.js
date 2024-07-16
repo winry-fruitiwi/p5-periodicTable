@@ -174,6 +174,7 @@ class Element {
 
         if (mouseJustReleased) {
             ifDarkenScreen = true
+            selectedElement = this
         }
     }
 }
