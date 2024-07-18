@@ -160,6 +160,7 @@ class PeriodicTable {
                 if (lGroup === 3) {
                     this.elements.push(
                         new Element(
+                            null,
                             "",
                             "lanthanides",
                             "",
@@ -175,6 +176,7 @@ class PeriodicTable {
 
                 this.elements.push(
                     new Element(
+                        element,
                         element["symbol"],
                         element["name"],
                         element["number"],
@@ -195,6 +197,7 @@ class PeriodicTable {
                 if (aGroup === 3) {
                     this.elements.push(
                         new Element(
+                            null,
                             "",
                             "actinides",
                             "",
@@ -210,6 +213,7 @@ class PeriodicTable {
 
                 this.elements.push(
                     new Element(
+                        element,
                         element["symbol"],
                         element["name"],
                         element["number"],
@@ -228,6 +232,7 @@ class PeriodicTable {
             else {
                 this.elements.push(
                     new Element(
+                        element,
                         element["symbol"],
                         element["name"],
                         element["number"],
@@ -283,7 +288,8 @@ class PeriodicTable {
                     mouseY < this.x + ((e.g - 1) * e.h) + e.h - e.h/2 + e.h &&
                     mouseX < tableTop + ((e.p - 1) * e.w) + e.w - e.w/2 &&
                     mouseY > this.x + ((e.g - 1) * e.h) - e.h/2 + e.h &&
-                    mouseX > tableTop + ((e.p - 1) * e.w) - e.w/2
+                    mouseX > tableTop + ((e.p - 1) * e.w) - e.w/2 &&
+                    !ifDarkenScreen
                 ) {
                     hoveredElement = e
                 }

@@ -3,7 +3,8 @@
 class Element {
     // the JSON includes far more properties than this, but this is a basic
     // periodic table and I can always add them throughout development
-    constructor(symbol, name, number, category, atomicMass, period, group, w=70, h=90) {
+    constructor(json, symbol, name, number, category, atomicMass, period, group, w=70, h=90) {
+        this.json = json
         this.symbol = symbol
         this.name = name
         this.number = number
@@ -172,9 +173,9 @@ class Element {
             massPosY
         )
 
-        if (mouseJustReleased) {
+        if (mouseJustReleased && this.json) {
             ifDarkenScreen = true
-            selectedElement = this
+            selectedElement = this.json
         }
     }
 }

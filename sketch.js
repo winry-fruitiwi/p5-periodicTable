@@ -84,18 +84,36 @@ function setup() {
     noCursor()
 }
 
+function detectPress() {
+    // margin between the left and right sides of the detailed view and the
+    // window. stands for "horizontal margin"
+    const H_MARGIN = 100
+    // "vertical margin" for the top and bottom sides of the detailed view
+    // and the window
+    const V_MARGIN = 100
+    // starting position for every piece in this display
+    let startPos = new p5.Vector(H_MARGIN + 50, V_MARGIN + 50)
+
+    if (mouseJustReleased && !(
+        startPos.x < mouseX &&
+        startPos.y < mouseY &&
+        mouseX < width - H_MARGIN &&
+        mouseY < height - V_MARGIN
+    )) {
+        ifDarkenScreen = false
+    }
+}
+
 
 function draw() {
     background(234, 34, 24)
+
+    detectPress()
 
     /* debugCorner needs to be last so its z-index is highest */
     // debugCorner.setText(`frameCount: ${frameCount}`, 2)
     // debugCorner.setText(`fps: ${frameRate().toFixed(0)}`, 1)
     // debugCorner.showBottom()
-
-    if (mouseJustReleased) {
-        ifDarkenScreen = false
-    }
 
     // testElement.render(10, 10)
     if (periodicTable)
@@ -123,17 +141,33 @@ function darkenScreen() {
 function displayDetailed(element) {
     // margin between the left and right sides of the detailed view and the
     // window. stands for "horizontal margin"
-    const H_MARGIN = 50
+    const H_MARGIN = 100
     // "vertical margin" for the top and bottom sides of the detailed view
     // and the window
-    const V_MARGIN = 50
+    const V_MARGIN = 100
+    // starting position for every piece in this display
+    let startPos = new p5.Vector(H_MARGIN + 50, V_MARGIN + 50)
 
     // background
     fill(0, 0, 10)
     noStroke()
     rect(
-        H_MARGIN, V_MARGIN
+        H_MARGIN, V_MARGIN,
+        width - H_MARGIN*2, height - V_MARGIN*2,
+        10 // corner radius
     )
+
+    // name
+    fill(0, 0, 100)
+    stroke(0, 0, 100)
+    strokeWeight(1)
+    textAlign(LEFT, TOP)
+    textSize(30)
+    text(element["name"], startPos.x, startPos.y)
+
+    textSize(14)
+    noStroke()
+    text(element["summary"], startPos.x, startPos.y + 60)
 }
 
 function displayMouseCursor() {
