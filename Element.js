@@ -15,6 +15,14 @@ class Element {
         this.w = w
         this.h = h
         this.padding = 5 // pads contents
+
+        if (this.json) {
+            this.imageURL = this.json["image"]["url"]
+            elementIMGs[this.name] = "https://cors-anywhere.herokuapp.com/" + this.imageURL
+            if (this.name === "Astatine") {
+                elementIMGs[this.name] = "imgs/astatine.png"
+            }
+        }
     }
 
     // renders the element. includes a hover and click check for enlarging the

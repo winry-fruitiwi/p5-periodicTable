@@ -29,6 +29,8 @@ let mouseJustReleased
 let ifDarkenScreen
 let selectedElement
 
+let elementIMGs = {}
+
 function preload() {
     font = loadFont('data/consola.ttf')
     fixedWidthFont = loadFont('data/consola.ttf')
@@ -54,15 +56,15 @@ function setup() {
 
     // debugCorner = new CanvasDebugCorner(5)
 
-    testElement = new Element(
-        "H",
-        "Hydrogen",
-        1,
-        "noble gas",
-        1.008,
-        1,
-        1
-    )
+    // testElement = new Element(
+    //     "H",
+    //     "Hydrogen",
+    //     1,
+    //     "noble gas",
+    //     1.008,
+    //     1,
+    //     1
+    // )
 
     backgroundColor = [234, 34, 24]
 
@@ -168,6 +170,14 @@ function displayDetailed(element) {
     textSize(14)
     noStroke()
     text(element["summary"], startPos.x, startPos.y + 60)
+
+    imageMode(CORNER)
+    let img = elementIMGs[element.name]
+    if (!(img instanceof p5.Image)) {
+        img = loadImage(img)
+        elementIMGs[element.name] = img
+    }
+    image(img, startPos.x, startPos.y + 60)
 }
 
 function displayMouseCursor() {
