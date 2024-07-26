@@ -30,6 +30,7 @@ let ifDarkenScreen
 let selectedElement
 
 let elementIMGs = {}
+let bohrIMGs = {}
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -171,11 +172,20 @@ function displayDetailed(element) {
     noStroke()
     text(element["summary"], startPos.x, startPos.y + 60)
 
+    // // images
+    // imageMode(CORNER)
+    // let img = elementIMGs[element.name]
+    // if (!(img instanceof p5.Image)) {
+    //     img = loadImage(img)
+    //     elementIMGs[element.name] = img
+    // }
+    // image(img, startPos.x, startPos.y + 60)
+
     imageMode(CORNER)
-    let img = elementIMGs[element.name]
+    let img = bohrIMGs[element.name]
     if (!(img instanceof p5.Image)) {
         img = loadImage(img)
-        elementIMGs[element.name] = img
+        bohrIMGs[element.name] = img
     }
     image(img, startPos.x, startPos.y + 60)
 }
