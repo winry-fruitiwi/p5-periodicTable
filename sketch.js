@@ -11,6 +11,9 @@
  *  I will still put products that I use here on the list of references.
  */
 
+// where characters wrap
+const CHAR_WRAP = 50
+
 let font
 let fixedWidthFont
 let variableWidthFont
@@ -148,6 +151,9 @@ function displayDetailed(element) {
     // "vertical margin" for the top and bottom sides of the detailed view
     // and the window
     const V_MARGIN = 100
+    // properties of the bohr model and element images
+    const IMG_WIDTH = 140
+    const IMG_MARGIN = 10
     // starting position for every piece in this display
     let startPos = new p5.Vector(H_MARGIN + 50, V_MARGIN + 50)
 
@@ -168,26 +174,49 @@ function displayDetailed(element) {
     textSize(30)
     text(element["name"], startPos.x, startPos.y)
 
-    textSize(14)
-    noStroke()
-    text(element["summary"], startPos.x, startPos.y + 60)
+    // images
+    imageMode(CORNER)
+    let elementIMG = elementIMGs[element.name]
+    if (!(elementIMG instanceof p5.Image)) {
+        elementIMG = loadImage(elementIMG)
+        elementIMGs[element.name] = elementIMG
+    }
 
-    // // images
-    // imageMode(CORNER)
-    // let img = elementIMGs[element.name]
-    // if (!(img instanceof p5.Image)) {
-    //     img = loadImage(img)
-    //     elementIMGs[element.name] = img
-    // }
-    // image(img, startPos.x, startPos.y + 60)
+    elementIMG.resize(IMG_WIDTH, 0)
+    image(elementIMG, startPos.x + IMG_WIDTH+IMG_MARGIN, startPos.y + 60)
 
     imageMode(CORNER)
-    let img = bohrIMGs[element.name]
-    if (!(img instanceof p5.Image)) {
-        img = loadImage(img)
-        bohrIMGs[element.name] = img
+    let bohrIMG = bohrIMGs[element.name]
+    if (!(bohrIMG instanceof p5.Image)) {
+        bohrIMG = loadImage(bohrIMG)
+        bohrIMGs[element.name] = bohrIMG
     }
-    image(img, startPos.x, startPos.y + 60)
+
+    bohrIMG.resize(IMG_WIDTH, 0)
+
+    image(bohrIMG, startPos.x, startPos.y + 60)
+
+    // displays a summary of the element's functions. needs to be
+    // text-wrapped. uses monospace font
+    textFont(fixedWidthFont, 14)
+    noStroke()
+
+    // text wrapping for the element summary calculates the line by keeping
+    // track of the beginning of the current line
+    for (let i=0; i<element["summary"].length;) {
+        let lastSpacePos = element["summary"].lastIndexOf(" ", i+CHAR_WRAP)
+
+        if (i+CHAR_WRAP >= element["summary"].length) {
+            lastSpacePos = element["summary"].length
+        }
+
+        text(element["summary"].slice(i, lastSpacePos),
+            startPos.x + IMG_WIDTH*2 + IMG_MARGIN*2,
+            startPos.y + 60 + textHeight()*(i/CHAR_WRAP)
+        )
+
+        i = lastSpacePos + 1
+    }
 }
 
 function displayMouseCursor() {

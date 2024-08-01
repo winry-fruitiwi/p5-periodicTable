@@ -17,11 +17,11 @@ class Element {
         this.padding = 5 // pads contents
 
         if (this.json) {
-            this.imageURL = this.json["image"]["url"]
-            elementIMGs[this.name] = "https://cors-anywhere.herokuapp.com/" + this.imageURL
-            if (this.name === "Astatine") {
-                elementIMGs[this.name] = `imgs/${this.name}.png`
-            }
+            // this.imageURL = this.json["image"]["url"]
+            // elementIMGs[this.name] = "https://cors-anywhere.herokuapp.com/" + this.imageURL
+            // if (this.name === "Astatine") {
+            elementIMGs[this.name] = `imgs/${this.name}.png`
+            // }
 
             this.bohrURL = this.json["bohr_model_image"]
             bohrIMGs[this.name] = this.bohrURL
