@@ -134,8 +134,8 @@ function draw() {
 
     mouseJustReleased = false
 
-    // if (frameCount > 3000)
-    //     noLoop()
+    if (frameCount > 3000)
+        noLoop()
 }
 
 function darkenScreen() {
