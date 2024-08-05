@@ -152,7 +152,7 @@ function displayDetailed(element) {
     // and the window
     const V_MARGIN = 100
     // properties of the bohr model and element images
-    const IMG_WIDTH = 140
+    const IMG_WIDTH = 300
     const IMG_MARGIN = 10
     // starting position for every piece in this display
     let startPos = new p5.Vector(H_MARGIN + 50, V_MARGIN + 50)
@@ -196,6 +196,8 @@ function displayDetailed(element) {
 
     image(bohrIMG, startPos.x, startPos.y + 60)
 
+    let greatestImgHeight = max(bohrIMG.height, elementIMG.height)
+
     // displays a summary of the element's functions. needs to be
     // text-wrapped. uses monospace font
     textFont(fixedWidthFont, 14)
@@ -211,8 +213,8 @@ function displayDetailed(element) {
         }
 
         text(element["summary"].slice(i, lastSpacePos),
-            startPos.x + IMG_WIDTH*2 + IMG_MARGIN*2,
-            startPos.y + 60 + textHeight()*(i/CHAR_WRAP)
+            startPos.x,
+            startPos.y+60 + textHeight()*(i/CHAR_WRAP)+greatestImgHeight+IMG_MARGIN
         )
 
         i = lastSpacePos + 1
