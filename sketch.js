@@ -174,7 +174,7 @@ function displayDetailed(element) {
     textSize(30)
     text(element["name"], startPos.x, startPos.y)
 
-    // images
+    // images - element image
     imageMode(CORNER)
     let elementIMG = elementIMGs[element.name]
     if (!(elementIMG instanceof p5.Image)) {
@@ -185,23 +185,37 @@ function displayDetailed(element) {
     elementIMG.resize(IMG_WIDTH, 0)
     image(elementIMG, startPos.x + IMG_WIDTH+IMG_MARGIN, startPos.y + 60)
 
-    imageMode(CORNER)
-    let bohrIMG = bohrIMGs[element.name]
-    if (!(bohrIMG instanceof p5.Image)) {
-        bohrIMG = loadImage(bohrIMG)
-        bohrIMGs[element.name] = bohrIMG
-    }
+    // bohr/lewis model image
+    // imageMode(CORNER)
+    // let bohrIMG = bohrIMGs[element.name]
+    // if (!(bohrIMG instanceof p5.Image)) {
+    //     bohrIMG = loadImage(bohrIMG)
+    //     bohrIMGs[element.name] = bohrIMG
+    // }
+    //
+    // bohrIMG.resize(IMG_WIDTH, 0)
+    //
+    // image(bohrIMG, startPos.x, startPos.y + 60)
+    let shells = element["shells"]
 
-    bohrIMG.resize(IMG_WIDTH, 0)
-
-    image(bohrIMG, startPos.x, startPos.y + 60)
-
-    let greatestImgHeight = max(bohrIMG.height, elementIMG.height)
+    fill(0, 0, 0)
+    noStroke()
+    rect(startPos.x, startPos.y + 60, IMG_WIDTH, IMG_WIDTH)
+    displayLewisModel(element["symbol"],
+        shells[shells.length-1],
+        startPos.x + IMG_WIDTH/2,
+        startPos.y + 60 + IMG_WIDTH/2,
+        IMG_WIDTH/3
+    )
 
     // displays a summary of the element's functions. needs to be
     // text-wrapped. uses monospace font
     textFont(fixedWidthFont, 14)
+    textAlign(LEFT, TOP)
+    fill(0, 0, 100)
     noStroke()
+
+    let greatestImgHeight = max(IMG_WIDTH, elementIMG.height)
 
     // text wrapping for the element summary calculates the line by keeping
     // track of the beginning of the current line
@@ -218,6 +232,49 @@ function displayDetailed(element) {
         )
 
         i = lastSpacePos + 1
+    }
+}
+
+// takes in the chemical symbol and number of valence electrons and displays
+// a Lewis diagram of an element
+function displayLewisModel(symbol, valence, x, y, dist) {
+    // draw the symbol in 50+ font size
+    textSize(100)
+    textAlign(CENTER, CENTER)
+    fill(0, 0, 100)
+    noStroke()
+    text(symbol, x, y)
+
+    // number of valence electrons determines layout - draw small 10px dots
+        // 1-4 → single electron for all
+        // 5 → double electron for 1
+        // 6 → double electron for 1 + 2
+        // 7 → double electron for 1 + 2 + 3
+        // 8 → double electron for all
+    stroke(0, 0, 100)
+    strokeWeight(10)
+
+    // the center of each point or pair of points that are displayed to
+    // represent electrons
+    let pointPositions = [
+        new p5.Vector(x, y - dist),
+        new p5.Vector(x + dist, y),
+        new p5.Vector(x, y + dist),
+        new p5.Vector(x - dist, y)
+    ]
+
+    for (let i=0; i<4; i++) {
+        let pointPos = pointPositions[i]
+
+        // if there are enough electrons, put the first x in pairs, where x
+        // is the current position minus number of valence electrons
+        if (valence - i >= 5) {
+            point(pointPos.x - 10, pointPos.y)
+            point(pointPos.x + 10, pointPos.y)
+        }
+        // always display one valence electron if there are enough electrons
+        else if ((valence - i - 1) >= 0)
+            point(pointPos.x, pointPos.y)
     }
 }
 
