@@ -212,14 +212,17 @@ function displayDetailed(element) {
 
     // TODO: add toggle for displaying lewis vs bohr model
 
-    if (mouseJustReleased &&
-        startPos.x < mouseX &&
+    if (startPos.x < mouseX &&
         startPos.y + 60 < mouseY &&
         mouseX < startPos.x + IMG_WIDTH &&
         mouseY < startPos.y + 60 + IMG_WIDTH
     ) {
-        ifBohrModel = !ifBohrModel
-        detailedDisplayFrame = frameCount
+        displayShellData(element, mouseX, mouseY)
+
+        if (mouseJustReleased) {
+            ifBohrModel = !ifBohrModel
+            detailedDisplayFrame = frameCount
+        }
     }
 
     if (ifBohrModel)
@@ -264,6 +267,26 @@ function displayDetailed(element) {
 
         i = lastSpacePos + 1
     }
+}
+
+// takes in a bunch of electron shell data and spits it out, but in a neat
+// format. includes data for electron shells, stable isotopes, etc. called
+// when mousing over the element model, uses x and y to determine where to
+// display
+function displayShellData(element, x, y) {
+    // draw a rectangle for the background, size currently indeterminate
+        // maybe instead add a shadow? decide later
+
+    // write the number of protons, neutrons, and electrons
+
+    // Protons - display atomic number. TODO does this need to be displayed?
+
+    // Neutrons - reference average atomic mass
+        // subtract the number of protons from the average atomic mass and
+        // round. this should usually be the most abundant isotope
+
+    // Electrons - display shells in order
+        // top-down or left-right list format?
 }
 
 // takes in the atomic number and all the shells, then displays a bohr
