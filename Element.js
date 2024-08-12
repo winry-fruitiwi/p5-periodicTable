@@ -190,6 +190,7 @@ class Element {
 
         if (mouseJustReleased && this.json) {
             ifDarkenScreen = true
+            detailedDisplayFrame = frameCount
             selectedElement = this.json
         }
     }

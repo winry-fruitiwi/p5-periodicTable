@@ -35,6 +35,14 @@ let selectedElement
 let elementIMGs = {}
 let bohrIMGs = {}
 
+// the frame when the detailed display starts displaying. Useful for
+// calculating the rotation of the bohr model.
+let detailedDisplayFrame = 0
+
+// toggles between Bohr and Lewis model display in the detailed element
+// display window
+let ifBohrModel = true
+
 function preload() {
     font = loadFont('data/consola.ttf')
     fixedWidthFont = loadFont('data/consola.ttf')
@@ -98,7 +106,7 @@ function detectPress() {
     // and the window
     const V_MARGIN = 100
     // starting position for every piece in this display
-    let startPos = new p5.Vector(H_MARGIN + 50, V_MARGIN + 50)
+    let startPos = new p5.Vector(H_MARGIN, V_MARGIN)
 
     if (mouseJustReleased && !(
         startPos.x < mouseX &&
@@ -201,12 +209,35 @@ function displayDetailed(element) {
     fill(0, 0, 0)
     noStroke()
     rect(startPos.x, startPos.y + 60, IMG_WIDTH, IMG_WIDTH)
-    displayLewisModel(element["symbol"],
-        shells[shells.length-1],
-        startPos.x + IMG_WIDTH/2,
-        startPos.y + 60 + IMG_WIDTH/2,
-        IMG_WIDTH/3
-    )
+
+    // TODO: add toggle for displaying lewis vs bohr model
+
+    if (mouseJustReleased &&
+        startPos.x < mouseX &&
+        startPos.y + 60 < mouseY &&
+        mouseX < startPos.x + IMG_WIDTH &&
+        mouseY < startPos.y + 60 + IMG_WIDTH
+    ) {
+        ifBohrModel = !ifBohrModel
+        detailedDisplayFrame = frameCount
+    }
+
+    if (ifBohrModel)
+        displayBohrModel(element["number"], element["shells"],
+            startPos.x + IMG_WIDTH/2,
+            startPos.y + 60 + IMG_WIDTH/2,
+            IMG_WIDTH
+        )
+
+    else
+        displayLewisModel(element["symbol"],
+            shells[shells.length-1],
+            startPos.x + IMG_WIDTH/2,
+            startPos.y + 60 + IMG_WIDTH/2,
+            IMG_WIDTH/3
+        )
+
+
 
     // displays a summary of the element's functions. needs to be
     // text-wrapped. uses monospace font
@@ -234,6 +265,55 @@ function displayDetailed(element) {
         i = lastSpacePos + 1
     }
 }
+
+// takes in the atomic number and all the shells, then displays a bohr
+// model of the element given. atomic number required to find neutral
+// charged atom. dist means the maximum distance to display all shells
+function displayBohrModel(aNumber, shells, x, y, dist) {
+    let nucleusRadius = 50
+    strokeWeight(nucleusRadius)
+    stroke(251, 61, 82) // random purple hue
+
+    point(x, y)
+
+    let shellMargin = (dist-nucleusRadius)/9
+    let firstShellRadius = nucleusRadius + 30
+    angleMode(DEGREES)
+
+    for (let i=0; i<shells.length; i++) {
+        push()
+        translate(x, y)
+        let shell = shells[i]
+        strokeWeight(1.5)
+        stroke(0, 0, 80)
+        noFill()
+        circle(0, 0, firstShellRadius + i*shellMargin)
+
+        if (i === shells.length - 1) {
+            strokeWeight(10)
+            stroke(360, 56, 98) // red
+        }
+        else {
+            strokeWeight(7)
+            stroke(90, 100, 100) // green
+        }
+
+        // display electrons and rotate them along their designated shell
+        for (let j=0; j < shell; j++) {
+            push()
+            let frameDelta = frameCount-detailedDisplayFrame
+            let rotationSpeed = frameDelta/((i+1)/5)*.5
+            if (i % 2 === 1)
+                rotate((j/shell)*360 - rotationSpeed)
+            else
+                rotate((j/shell)*360 + rotationSpeed)
+            point(0, -(firstShellRadius + i*shellMargin)/2)
+            pop()
+        }
+        pop()
+    }
+}
+
 
 // takes in the chemical symbol and number of valence electrons and displays
 // a Lewis diagram of an element
