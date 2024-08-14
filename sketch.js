@@ -273,17 +273,22 @@ function displayShellData(element, x, y) {
     textSize(14)
 
     // define all variables required
+    // padding between electron and proton/neutron counts
+    let nucleusPadding = 30
     let padding = 5
     let shells = element["shells"]
     let atomicMass = element["atomic_mass"]
     let protons = element["number"] // protons = atomic number
+    let protonString = `${protons} protons`
 
     // calculate number of neutrons based on the atomic mass
     let neutrons = round(atomicMass - protons)
+    let neutronString = `${neutrons} neutrons`
 
     // let textHeight = textAscent() + textDescent()
     let rectHeight = padding + (textHeight()*(shells.length+1)) + padding
     let rectWidth = padding + textWidth("shells:") + padding
+    rectWidth += max(textWidth(neutronString), textWidth(protonString)) + nucleusPadding
 
     // draw a rectangle for the background, size currently indeterminate
         // maybe instead add a shadow? decide later
@@ -291,21 +296,30 @@ function displayShellData(element, x, y) {
     fill(0, 0, 50)
     rect(x, y, rectWidth, rectHeight, 8)
 
-    // write the number of protons, neutrons, and electrons
-
-    // Protons - display atomic number. TODO does this need to be displayed?
-
-    // Neutrons - reference average atomic mass
-        // subtract the number of protons from the average atomic mass and
-        // round. this should usually be the most abundant isotope
-
     // Electrons - display shells in order
-        // top-down or left-right list format?
     fill(0, 0, 100)
     // text(shellString, x+padding + rectWidth, y+padding)
     text("shells:", x+padding, y+padding)
-    for (let i = 1; i <= shells.length; i++)
+    for (let i = 1; i <= shells.length; i++) {
         text(shells[i-1], x+padding, y+padding + textHeight()*i)
+    }
+
+    // x-coordinate breakdown: starting position + padding + the width of
+    // the electron shell widget + padding between shells and proton/neutron
+    // display
+
+    // Neutrons - reference average atomic mass
+    // subtract the number of protons from the average atomic mass and
+    // round. this should usually be the most abundant isotope
+    text(neutronString,
+        x+padding+textWidth("shells:")+nucleusPadding,
+        y+padding
+    )
+    // Protons - display atomic number.
+    text(protonString,
+        x+padding+textWidth("shells:")+nucleusPadding,
+        y+padding + textHeight()
+    )
 }
 
 // takes in the atomic number and all the shells, then displays a bohr
