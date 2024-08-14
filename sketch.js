@@ -210,21 +210,6 @@ function displayDetailed(element) {
     noStroke()
     rect(startPos.x, startPos.y + 60, IMG_WIDTH, IMG_WIDTH)
 
-    // TODO: add toggle for displaying lewis vs bohr model
-
-    if (startPos.x < mouseX &&
-        startPos.y + 60 < mouseY &&
-        mouseX < startPos.x + IMG_WIDTH &&
-        mouseY < startPos.y + 60 + IMG_WIDTH
-    ) {
-        displayShellData(element, mouseX, mouseY)
-
-        if (mouseJustReleased) {
-            ifBohrModel = !ifBohrModel
-            detailedDisplayFrame = frameCount
-        }
-    }
-
     if (ifBohrModel)
         displayBohrModel(element["number"], element["shells"],
             startPos.x + IMG_WIDTH/2,
@@ -239,8 +224,6 @@ function displayDetailed(element) {
             startPos.y + 60 + IMG_WIDTH/2,
             IMG_WIDTH/3
         )
-
-
 
     // displays a summary of the element's functions. needs to be
     // text-wrapped. uses monospace font
@@ -267,6 +250,19 @@ function displayDetailed(element) {
 
         i = lastSpacePos + 1
     }
+
+    if (startPos.x < mouseX &&
+        startPos.y + 60 < mouseY &&
+        mouseX < startPos.x + IMG_WIDTH &&
+        mouseY < startPos.y + 60 + IMG_WIDTH
+    ) {
+        displayShellData(element, mouseX, mouseY)
+
+        if (mouseJustReleased) {
+            ifBohrModel = !ifBohrModel
+            detailedDisplayFrame = frameCount
+        }
+    }
 }
 
 // takes in a bunch of electron shell data and spits it out, but in a neat
@@ -274,8 +270,26 @@ function displayDetailed(element) {
 // when mousing over the element model, uses x and y to determine where to
 // display
 function displayShellData(element, x, y) {
+    textSize(14)
+
+    // define all variables required
+    let padding = 5
+    let shells = element["shells"]
+    let atomicMass = element["atomic_mass"]
+    let protons = element["number"] // protons = atomic number
+
+    // calculate number of neutrons based on the atomic mass
+    let neutrons = round(atomicMass - protons)
+
+    // let textHeight = textAscent() + textDescent()
+    let rectHeight = padding + (textHeight()*(shells.length+1)) + padding
+    let rectWidth = padding + textWidth("shells:") + padding
+
     // draw a rectangle for the background, size currently indeterminate
         // maybe instead add a shadow? decide later
+    noStroke()
+    fill(0, 0, 50)
+    rect(x, y, rectWidth, rectHeight, 8)
 
     // write the number of protons, neutrons, and electrons
 
@@ -287,6 +301,11 @@ function displayShellData(element, x, y) {
 
     // Electrons - display shells in order
         // top-down or left-right list format?
+    fill(0, 0, 100)
+    // text(shellString, x+padding + rectWidth, y+padding)
+    text("shells:", x+padding, y+padding)
+    for (let i = 1; i <= shells.length; i++)
+        text(shells[i-1], x+padding, y+padding + textHeight()*i)
 }
 
 // takes in the atomic number and all the shells, then displays a bohr
