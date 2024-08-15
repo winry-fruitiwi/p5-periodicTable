@@ -232,7 +232,26 @@ function displayDetailed(element) {
     fill(0, 0, 100)
     noStroke()
 
+    let titleWrap = 40
+
     let greatestImgHeight = max(IMG_WIDTH, elementIMG.height)
+
+    // text wrapping for the element image title calculates the line by keeping
+    // track of the beginning of the current line
+    for (let i=0; i<element["image"]["title"].length;) {
+        let lastSpacePos = element["image"]["title"].lastIndexOf(" ", i+titleWrap)
+
+        if (i+titleWrap >= element["image"]["title"].length) {
+            lastSpacePos = element["image"]["title"].length
+        }
+
+        text(element["image"]["title"].slice(i, lastSpacePos),
+            startPos.x + (IMG_WIDTH + IMG_MARGIN)*2,
+            startPos.y+60 + textHeight()*(i/titleWrap)
+        )
+
+        i = lastSpacePos + 1
+    }
 
     // text wrapping for the element summary calculates the line by keeping
     // track of the beginning of the current line
